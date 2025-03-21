@@ -96,20 +96,20 @@ if(!file_exists("content/plugins")){
 									<button type="submit" class="btn btn-primary btn-md">Submit</button>
 								</form>
 								<?php
-							} catch(PDOException $e) {
-								echo '<div class="alert alert-danger" role="alert">Failed. Can\'t connect to database.</div>';
-								try {
-    $conn = new PDO("mysql:host=".$db_host.";dbname=".$db_name, $db_user, $db_password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    create_tables($conn);
-    // ...其他代码不变...
-} catch(PDOException $e) {
-    echo '<div class="alert alert-danger" role="alert">数据库连接失败: ' . $e->getMessage() . '</div>';
-    header('Refresh: 5; url=install.php');
-}
-$conn = null;
-						}
-					} elseif(isset($_POST['admin_user'])){
+								} catch(PDOException $e) {
+    echo '<div class="alert alert-danger" role="alert">Failed. Can\'t connect to database.</div>';
+    try {
+        $conn = new PDO("mysql:host=".$db_host.";dbname=".$db_name, $db_user, $db_password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        // 其他代码
+    } catch(PDOException $e) {
+        echo '<div class="alert alert-danger" role="alert">数据库连接失败: ' . $e->getMessage() . '</div>';
+        header('Refresh: 5; url=install.php');
+    }
+    $conn = null;
+} // 外层catch结束
+} // 添加此行关闭if(isset($_POST['db_name']))语句
+elseif(isset($_POST['admin_user'])){
 						$admin_user_ori = $_POST['admin_user'];
 						$admin_user = preg_replace('~[^A-Za-z0-9-_]~','', $_POST['admin_user']);
 						if($admin_user == $admin_user_ori){
