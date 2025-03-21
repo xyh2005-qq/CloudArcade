@@ -101,12 +101,13 @@ if(!file_exists("content/plugins")){
 								try {
     $conn = new PDO("mysql:host=".$db_host.";dbname=".$db_name, $db_user, $db_password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    // 其他代码
+    create_tables($conn);
+    // ...其他代码不变...
 } catch(PDOException $e) {
     echo '<div class="alert alert-danger" role="alert">数据库连接失败: ' . $e->getMessage() . '</div>';
-    header('Refresh: 5; url=install.php'); // 增加显示时间以便查看错误
-};
-							$conn = null;
+    header('Refresh: 5; url=install.php');
+}
+$conn = null;
 						}
 					} elseif(isset($_POST['admin_user'])){
 						$admin_user_ori = $_POST['admin_user'];
