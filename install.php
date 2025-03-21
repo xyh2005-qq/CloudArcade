@@ -1,5 +1,4 @@
 <?php 
-ob_start();
 session_start();
 if(file_exists("connect.php")){
 	header('Location: /');
